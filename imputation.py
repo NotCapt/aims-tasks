@@ -13,7 +13,20 @@ df = pd.DataFrame(dict1)
 #print(df)
 
 # replacing gurgaon's price with the mean of other values
-df.Price[5] = df.Price.mean()
+# df.Price[5] = df.Price.mean()
 #print(df.Price[5])
+
+# Finding missing columns
+missing_cols = []
+for cols in df.columns:
+    if df[cols].isnull().any():
+        missing_cols.append(cols)
+
+# replacing missing values
+for cols in missing_cols:
+    col_mean = df[cols].mean()
+    for i in df.index:
+        if pd.isnull(df.loc[i, cols]):
+            df.loc[i, cols] = col_mean
 
 print(df)
